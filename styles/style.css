@@ -3,7 +3,9 @@
   
   position: relative;
   width: 100%;
-  max-width: 1440px; /* Set a max-width for larger screens */
+  max-width: auto; /* Set a max-width for larger screens */
+  aspect-ratio: 16/9; /* Maintain a 16:9 aspect ratio */
+  height: auto; /* Set height to auto to maintain aspect ratio */
   margin: 0 auto; /* Center the gallery */
   overflow: hidden;
 
@@ -126,7 +128,7 @@
 .featured-container {
   width: 100%;
 
-  perspective: 1000px;
+  perspective: 1200px;
 }
 .card {
   background-color: #ffffff;
@@ -481,7 +483,7 @@
   --percent: calc(var(--rating) / 5 * 100%);
   display: inline-block;
   font-size: 20px;
-  font-family: Times;
+  font-family: "Times", serif;
   line-height: 1;
 }
 

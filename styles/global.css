@@ -5523,12 +5523,11 @@ iframe.uk-cover {
     margin-bottom: -2px
 }
 
-@-moz-document url-prefix() {
-
-    .uk-dropcap::first-letter,
-    .uk-dropcap>p:first-of-type::first-letter {
-        margin-top: 1.1%
-    }
+.uk-dropcap::first-letter {
+    font-size: 1em;
+    line-height: 1.5;
+    margin-right: 0;
+    float: none
 }
 
 @supports (-ms-ime-align:auto) {
@@ -7387,7 +7386,8 @@ iframe.uk-cover {
 }
 
 .tm-navbar-container-fixed {
-    z-index: 1000;
+    z-index: 1030;
+    position: fixed;
 }
 
 
@@ -7505,7 +7505,7 @@ iframe.uk-cover {
 }
 
 .tm-product-card-media>.tm-ratio>.tm-media-box {
-    padding: 15px
+    padding: 10px
 }
 
 @media (min-width:640px) {
@@ -7729,7 +7729,7 @@ iframe.uk-cover {
         width: 33.3%;
         min-width: 170px;
         margin: 0;
-        padding-left: 20px;
+        padding-left: 0;
         border-left: 1px solid #e5e5e5;
         -ms-flex-negative: 0;
         flex-shrink: 0
