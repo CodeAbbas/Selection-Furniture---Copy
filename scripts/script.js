@@ -170,11 +170,11 @@ function createBestSellingCard(product) {
             <div class="uk-inline-clip uk-transition-toggle uk-height-medium uk-width-1-1" tabindex="0" style="border-radius: 10px; overflow: hidden;">
                 <a href="${productUrl}" class="tm-best-selling-media-box">
                     <img src="${image}" alt="${product.title}" style="width: 100%; height: 100%; object-fit: cover; object-position: center;">
-                    <div class="uk-overlay uk-overlay-primary uk-position-top-left uk-padding-small" style="background: rgba(0, 0, 0, 0.6); font-size: 0.85rem;">
+                    <div class="uk-overlay uk-overlay-primary uk-position-top-left uk-padding-small" style="position: absolute; top: 15px; left: 15px; background: rgba(226, 225, 225, 0.8); color: #000000; padding: 4px 14px; border-radius: 4px; font-size: 0.8rem; font-weight: 500; display: flex; align-items: center; ">
                         ${categoryText}
                     </div>
-                    <div class="uk-overlay uk-overlay-default uk-position-bottom uk-text-center uk-transition-slide-bottom" style="background: rgba(255, 255, 255, 0.85); padding: 10px;">
-                        <h4 class="uk-margin-remove uk-text-bold uk-text-small">${product.title}</h4>
+                    <div class=" uk-position-bottom uk-text-center uk-transition-slide-bottom" style="background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent); padding: 20px;">
+                        <h4 class="uk-margin-remove uk-text-bold " style="color: rgb(226, 225, 225);">${product.title}</h4>
                     </div>
                     <div class="tm-best-selling-rating-badge">
                         <span class="uk-icon" uk-icon="icon: star; ratio: 1;"></span>
@@ -185,6 +185,8 @@ function createBestSellingCard(product) {
         </li>
     `;
 }
+
+// best selling v1
 
 
 // Fetch products and populate slider
@@ -240,3 +242,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 });
+
+
+// For You Section v1
