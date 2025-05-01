@@ -47,6 +47,7 @@
                             <ul class="uk-breadcrumb uk-flex-center uk-margin-remove">
                                 <li><a href="index.html">Home</a></li>
                                 <li><a href="#" id="categoryLink"></a></li>
+                                <li><a href="" id="subcategoryLink"></a></li>
                                 <li><span id="productTitle"></span></li>
                             </ul>
                             <h1 class="uk-margin-small-top uk-text-large uk-margin-remove-bottom" id="productName"></h1>
@@ -251,6 +252,7 @@
                 document.title = `${product.title} - Selection Furniture`; //Dynamic title change
                 document.getElementById('productName').textContent = product.title;
                 document.getElementById('categoryLink').textContent = product.category;
+                document.getElementById('subcategoryLink').textContent = product.subcategory;
                 document.getElementById('productTitle').textContent = product.title;
                 document.getElementById('productTitleDisplay').textContent = product.title;
                 

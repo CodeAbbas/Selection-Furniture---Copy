@@ -170,7 +170,7 @@ function createBestSellingCard(product) {
             <div class="uk-inline-clip uk-transition-toggle uk-height-medium uk-width-1-1" tabindex="0" style="border-radius: 10px; overflow: hidden;">
                 <a href="${productUrl}" class="tm-best-selling-media-box">
                     <img src="${image}" alt="${product.title}" style="width: 100%; height: 100%; object-fit: cover; object-position: center;">
-                    <div class="uk-overlay uk-overlay-primary uk-position-top-left uk-padding-small" style="position: absolute; top: 15px; left: 15px; background: rgba(226, 225, 225, 0.8); color: #000000; padding: 4px 14px; border-radius: 4px; font-size: 0.8rem; font-weight: 500; display: flex; align-items: center; ">
+                    <div class="uk-overlay uk-overlay-primary uk-position-top-left uk-padding-small category-text">
                         ${categoryText}
                     </div>
                     <div class=" uk-position-bottom uk-text-center uk-transition-slide-bottom" style="background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent); padding: 20px;">
