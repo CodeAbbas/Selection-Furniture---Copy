@@ -70,38 +70,6 @@
     ]
   },
   {
-    "id": 1740658957973,
-    "title": "Test1",
-    "price": 0,
-    "category": "Sofa ",
-    "subcategory": "LShape",
-    "inStock": 5,
-    "topSelling": false,
-    "newArrival": true,
-    "outStock": false,
-    "description": "test descriptio n\r\n",
-    "specifications": {
-      "size": "L Shape",
-      "color": "Black, Blue, Grey",
-      "material": "Plush Velvet"
-    },
-    "reviews": [
-      {
-        "user": "user1",
-        "rating": "4",
-        "comment": "Nice & comfortable sofa"
-      }
-    ],
-    "relatedProducts": [
-      2,
-      3,
-      4
-    ],
-    "images": [
-      "uploads\\1740658957955-SofaCouch.jpg"
-    ]
-  },
-  {
     "id": 1741271857651,
     "title": "Infinity High gloss Wardrobe",
     "price": 575,
@@ -199,6 +167,150 @@
         },
         {
           "name": "Grey",
+          "code": ""
+        }
+      ],
+      "materials": []
+    }
+  },
+  {
+    "id": 1746106445829,
+    "title": "RUGBY WHITE GLOSS BED",
+    "price": null,
+    "oldPrice": 575,
+    "category": "Bed",
+    "subcategory": "High Gloss",
+    "inStock": 4,
+    "topSelling": true,
+    "newArrival": true,
+    "outStock": false,
+    "description": "Stylish, Modern, High Gloss White Storage Bed frame with different types of headboards. This Fantastic low foot end sturdy bed frame comes with flat MDF wood base. This bed offers a storage area shown underneath the bed as in the picture.\r\n\r\nSolid MDF Wood construct\r\nBeautiful High Gloss\r\nVarious headboards.\r\nLED Built in Storage Depth 40 cm\r\nExcellent ottoman storage capacity with easy-lift gas hydraulics\r\nComes flatpack in boxes\r\nIncludes:\r\nAll screws and fittings\r\nComes in 4 Boxes for Easy moving into the House\r\nAllen Key/Spinner included\r\nNote: only picture instruction manual included\r\n",
+    "specifications": {
+      "size": "Single Storage, Double Storage, King Storage",
+      "color": "White, Black, Light Grey, Twin Cream, Twin Grey",
+      "material": ""
+    },
+    "reviews": [
+      {
+        "user": "Abdul Muhid",
+        "rating": "5",
+        "comment": "The high gloss bed is very nice and has good quality, also at a good price, and with good service."
+      }
+    ],
+    "relatedProducts": [
+      null
+    ],
+    "images": [
+      "https://slidingwardrobes4u.com/wp-content/uploads/2021/03/2-13.jpg",
+      "uploads\\1746106445811-rugby high gloss.jpg"
+    ],
+    "variations": {
+      "sizes": [
+        {
+          "name": "Single Storage",
+          "dimensions": "W110cm x L215cm x H125cm",
+          "price": "475"
+        },
+        {
+          "name": "Double Storage",
+          "dimensions": "W155cm x L225cm x H125cm",
+          "price": "499"
+        },
+        {
+          "name": "King Storage",
+          "dimensions": "W165cm x L225cm x H125cm",
+          "price": "598"
+        }
+      ],
+      "colors": [
+        {
+          "name": "White",
+          "code": ""
+        },
+        {
+          "name": "Black",
+          "code": ""
+        },
+        {
+          "name": "Light Grey",
+          "code": ""
+        },
+        {
+          "name": "Twin Cream",
+          "code": ""
+        },
+        {
+          "name": "Twin Grey",
+          "code": ""
+        }
+      ],
+      "materials": []
+    }
+  },
+  {
+    "id": 1746107734963,
+    "title": "Munich Dining Table",
+    "price": 500,
+    "oldPrice": 600,
+    "category": "Dining",
+    "subcategory": "Table",
+    "inStock": 5,
+    "topSelling": true,
+    "newArrival": true,
+    "outStock": false,
+    "description": "The Munich Dining Table features an eye-catching design with its round chrome legs and marble top, available in a variety of colors and sizes. Its unique design sets it apart from other dining tables, allowing it to become a statement piece in any dining space.",
+    "specifications": {
+      "size": "150cm, 180cm, 200cm",
+      "color": "White Marble, Grey Marble, Black Marble, Cream Marble, Mixed Brown Marble",
+      "material": ""
+    },
+    "reviews": [],
+    "relatedProducts": [
+      2,
+      3,
+      4
+    ],
+    "images": [
+      "https://msfurnishings.co.uk/cdn/shop/products/DINNING1a_v2_1080x.jpg?v=1698521462",
+      "uploads\\1746107734945-Munich Dining Table.webp"
+    ],
+    "variations": {
+      "sizes": [
+        {
+          "name": "150cm",
+          "dimensions": "L150cm, W90cm, H75cm",
+          "price": "500"
+        },
+        {
+          "name": "180cm",
+          "dimensions": "L180cm, W90cm, H75cm",
+          "price": "540"
+        },
+        {
+          "name": "200cm",
+          "dimensions": "L200cm, W100cm, H75cm",
+          "price": "590"
+        }
+      ],
+      "colors": [
+        {
+          "name": "White Marble",
+          "code": ""
+        },
+        {
+          "name": "Grey Marble",
+          "code": ""
+        },
+        {
+          "name": "Black Marble",
+          "code": ""
+        },
+        {
+          "name": "Cream Marble",
+          "code": ""
+        },
+        {
+          "name": "Mixed Brown Marble",
           "code": ""
         }
       ],

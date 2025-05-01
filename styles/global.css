@@ -2317,7 +2317,7 @@ select.uk-form-width-xsmall {
 }
 
 .uk-overlay-primary {
-    background: rgba(34, 34, 34, .8)
+    background: rgba(34, 34, 34, .4)
 }
 
 .uk-article::after,

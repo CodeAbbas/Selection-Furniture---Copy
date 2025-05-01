@@ -244,4 +244,46 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
-// For You Section v1
+// Lookbook
+document.addEventListener('DOMContentLoaded', () => {
+    fetch('product-admin/products.json')
+      .then(res => {
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        return res.json();
+      })
+      .then(products => {
+        const grid = document.getElementById('lookbook-grid');
+        if (!grid) return;
+  
+        // Get one product per category
+        const productsByCategory = products.reduce((acc, product) => {
+          if (!acc[product.category]) {
+            acc[product.category] = product;
+          }
+          return acc;
+        }, {});
+        const lookbookItems = Object.values(productsByCategory);
+  
+        lookbookItems.forEach(product => {
+          const image = product.images?.[0] || 'https://via.placeholder.com/600';
+          const title = product.category;
+          const link = `category.html?cat=${encodeURIComponent(product.category)}`;
+  
+          const item = document.createElement('div');
+          item.className = 'lookbook-item';
+          item.innerHTML = `
+            <a href="${link}" class="uk-inline-clip uk-transition-toggle" tabindex="0">
+              <img src="${image}" alt="${title}" class="uk-width-1-1 uk-height-medium uk-object-cover">
+              <div class="uk-overlay uk-overlay-primary uk-position-cover uk-flex uk-flex-center uk-flex-middle uk-transition-fade">
+                <div class="lookbook-content">
+                  <h3 class="uk-text-uppercase uk-margin-remove">${title}</h3>
+                  <button class="uk-button uk-button-primary uk-button-small uk-margin-small-top">Shop Now</button>
+                </div>
+              </div>
+            </a>
+          `;
+          grid.appendChild(item);
+        });
+      })
+      .catch(err => console.error('Lookbook load error:', err));
+  });

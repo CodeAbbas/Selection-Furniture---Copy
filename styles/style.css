@@ -598,3 +598,32 @@
   .tm-best-selling-rating-badge span.uk-icon { width: 16px; height: 16px; }
   .uk-slider-items { padding: 0 5px; }
 }
+
+/***** Lookbook ******/
+.lookbook-item img {
+  transition: transform 0.5s ease;
+}
+.lookbook-item:hover img,
+.lookbook-item:focus-within img {
+  transform: scale(1.05);
+}
+.lookbook-section .uk-overlay-primary {
+  background-color: rgba(0, 0, 0, 0.3) !important;
+}
+.lookbook-content h3 {
+  color: #fff;
+  font-size: 1.25rem;
+  margin: 0;
+}
+.lookbook-content button {
+  background-color: #222;
+  border-color: #222;
+}
+.lookbook-content button:hover {
+  background-color: #444;
+  border-color: #444;
+}
+.lookbook-content button:focus {
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(34, 34, 34, 0.5);
+}

@@ -11,6 +11,7 @@ const port = 3000;
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(express.static('public')); // Serve static files (CSS, JS, etc.)
+app.use('/uploads', express.static('uploads')); // Serve uploaded images
 
 // Multer configuration for file uploads
 const storage = multer.diskStorage({
@@ -28,7 +29,7 @@ if (!fs.existsSync('uploads')) {
     fs.mkdirSync('uploads');
 }
 
-// Route to handle form submission
+// Route to handle product form submission (existing)
 app.post('/upload/product', upload.array('images', 10), (req, res) => {
     const { title, price, category, subcategory, inStock, topSelling, newArrival, outStock, description, relatedProducts, variations } = req.body;
 
@@ -50,7 +51,7 @@ app.post('/upload/product', upload.array('images', 10), (req, res) => {
 
     // Create product object
     const product = {
-        id: Date.now(), // Unique ID for the product
+        id: Date.now(),
         title,
         price: parseFloat(price),
         category,
@@ -85,6 +86,23 @@ app.post('/upload/product', upload.array('images', 10), (req, res) => {
 
     res.sendFile(path.join(__dirname, 'upload', 'product', 'index.html'));
 });
+
+// New route to get lookbooks
+app.get('/lookbooks', (req, res) => {
+    try {
+        const lookbooksPath = path.join(__dirname, 'lookbooks.json');
+        if (!fs.existsSync(lookbooksPath)) {
+            return res.json([]);
+        }
+        const lookbooks = JSON.parse(fs.readFileSync(lookbooksPath, 'utf-8'));
+        res.json(lookbooks);
+    } catch (error) {
+        console.error('Error reading lookbooks:', error);
+        res.status(500).json({ error: 'Failed to load lookbooks' });
+    }
+});
+
+
 
 // Start the server
 app.listen(port, () => {
