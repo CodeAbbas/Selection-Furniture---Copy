@@ -73,7 +73,7 @@
                 <div class="uk-navbar-right uk-visible@s">
                     <nav>
                         <ul class="uk-navbar-nav">
-                            <li><a href="news.html">News</a></li>
+                            <li><a href="terms&conditions.html">T&Q</a></li>
                             <li><a href="faq.html">FAQ</a></li>
                             <li><a href="#">Payment</a></li>
                         </ul>
@@ -464,37 +464,48 @@
     </header>
     <main>
         <!-- Gallery Slider -->
-        <div class="new-gallery">
-            <div class="new-photos">
-                <div class="new-slide active">
-                    <img src="https://images.ctfassets.net/ylqmmgjpbpfw/4ikTWACttfLMR8uVym4Owi/6535d00ddfdfc38eb1040fa841193d4b/ANTONY-MODULAR-NICO-OYSTER-210923-T4-0816x-2.jpg?h=720&w=1920&fit=fill&fm=jpg&fl=progressive"
-                        alt="Image 1">
-                </div>
-                <div class="new-slide">
-                    <img src="assets/images/Sofa/Laguna-sofabed-Branding-2-1.webp" alt="Image 2">
-                </div>
-                <div class="new-slide">
-                    <img src="assets/images/Dinning/DINNING.webp" alt="Image 3">
-                </div>
-                <div class="new-slide">
-                    <img src="assets/images/Bed/AlaskaBed.webp" alt="Image 4">
+        <section class="enhanced-gallery uk-section uk-section-muted" id="gallery">
+            <div class="uk-container uk-container-large">
+                <div class="new-gallery" uk-lightbox>
+                    <div class="new-photos">
+                        <div class="new-slide active">
+                            <a href="#" data-caption="Antony Modular Sofa">
+                                <img src="https://images.ctfassets.net/ylqmmgjpbpfw/4ikTWACttfLMR8uVym4Owi/6535d00ddfdfc38eb1040fa841193d4b/ANTONY-MODULAR-NICO-OYSTER-210923-T4-0816x-2.jpg?h=720&w=1920&fit=fill&fm=jpg&fl=progressive" alt="Antony Modular Sofa in oyster fabric" loading="lazy">
+                            </a>
+                        </div>
+                        <div class="new-slide">
+                            <a href="assets/images/Sofa/Laguna-sofabed-Branding-2-1.webp" data-caption="Laguna Sofabed">
+                                <img src="assets/images/Sofa/Laguna-sofabed-Branding-2-1.webp" alt="Laguna Sofabed in modern setting" loading="lazy">
+                            </a>
+                        </div>
+                        <div class="new-slide">
+                            <a href="assets/images/Dinning/Munich Dining Table.webp" data-caption="Munich Dining Table">
+                                <img src="assets/images/Dinning/Munich Dining Table.webp" alt="Munich Dining Table in contemporary dining room" loading="lazy">
+                            </a>
+                        </div>
+                        <div class="new-slide">
+                            <a href="assets/images/Bed/AlaskaBed.webp" data-caption="Alaska Bed">
+                                <img src="assets/images/Bed/AlaskaBed.webp" alt="Alaska Bed in cozy bedroom" loading="lazy">
+                            </a>
+                        </div>
+                    </div>
+                    <div class="new-buttons">
+                        <button class="new-prev" uk-icon="arrow-left" aria-label="Previous slide"></button>
+                        <button class="new-next" uk-icon="arrow-right" aria-label="Next slide"></button>
+                    </div>
+                    <div class="dot-mid">
+                        <ul class="new-dots">
+                            <li class="active" data-slide="0" aria-label="Slide 1"></li>
+                            <li data-slide="1" aria-label="Slide 2"></li>
+                            <li data-slide="2" aria-label="Slide 3"></li>
+                            <li data-slide="3" aria-label="Slide 4"></li>
+                        </ul>
+                    </div>
                 </div>
             </div>
-            <div class="new-buttons">
-                <button class="new-prev" uk-icon="arrow-left"></button>
-                <button class="new-next" uk-icon="arrow-right"></button>
-            </div>
-            <div class="dot-mid">
-                <ul class="new-dots">
-                    <li class="active" data-slide="0"></li>
-                    <li data-slide="1"></li>
-                    <li data-slide="2"></li>
-                    <li data-slide="3"></li>
-                </ul>
-            </div>
-        </div>
+        </section>
 
-        <section class="uk-section uk-section-default uk-section-small">
+        <section class="uk-section uk-section-default uk-section-muted uk-section-small">
             <div class="uk-container">
                 <div class="uk-grid-small uk-child-width-1-2 uk-child-width-1-3@s uk-child-width-1-6@m" uk-grid="">
                     <div><a class="uk-link-muted uk-text-center uk-display-block uk-padding-small uk-box-shadow-hover-large"
@@ -634,7 +645,7 @@
         <!-- Featured -->
 
         <!-- Best Selling -->
-        <section class="uk-section uk-section-default uk-section-small" style="padding: 30px 0; ">
+        <section class="uk-section uk-section-default uk-section-small uk-section-muted" style="padding: 30px 0; ">
             <div class="uk-container">
                 <a class="uk-link-muted tm-link-to-all" href="featured.html"></a>
                     <h2 class="uk-text-center uk-text-large uk-margin-medium-bottom" style="font-size: 2rem; font-weight: bold;">Best Selling</h2>
@@ -672,29 +683,8 @@
             </div>
         </section>
           
-        <!--Lookbook end-->          
+        <!--Lookbook end-->     
 
-
-        <section class="uk-section uk-section-default uk-section-small">
-            <div class="uk-container">
-                <div class="uk-grid-medium uk-child-width-1-1 uk-child-width-1-2@s" uk-grid="">
-                    <section>
-                        <h2 class="uk-text-center uk-text-left@s">About</h2>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc at neque vulputate,
-                            vestibulum magna in, accumsan urna. Nulla feugiat ipsum ex, molestie porttitor nibh
-                            faucibus at. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam hendrerit
-                            lorem ut finibus semper. Donec ac vehicula erat, nec consequat massa.</p>
-                        <p>Quisque rhoncus fermentum sapien id congue. Nam at rutrum turpis. Aliquam sagittis
-                            imperdiet tortor vel dignissim. Ut ipsum nunc, egestas et odio id, vestibulum posuere
-                            orci. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus
-                            mus.</p>
-                        <div class="uk-text-center uk-text-left@s"><a
-                                class="uk-link-muted uk-text-uppercase tm-link-to-all" href="about.html"><span>read
-                                    more</span><span uk-icon="icon: chevron-right; ratio: .75;"></span></a></div>
-                    </section>
-                </div>
-            </div>
-        </section>
         <section class="uk-section uk-section-primary uk-section-small uk-light">
             <div class="uk-container">
                 <div class="uk-text-center">

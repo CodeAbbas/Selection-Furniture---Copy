@@ -1,48 +1,52 @@
-document.addEventListener("DOMContentLoaded", () => {
+// gallery Slider
+document.addEventListener('DOMContentLoaded', () => {
     const slides = document.querySelectorAll('.new-slide');
     const dots = document.querySelectorAll('.new-dots li');
-    const nextBtn = document.querySelector('.new-next');
-    const prevBtn = document.querySelector('.new-prev');
-    let currentIndex = 0;
+    const prevButton = document.querySelector('.new-prev');
+    const nextButton = document.querySelector('.new-next');
+    let currentSlide = 0;
 
     function showSlide(index) {
-        const totalSlides = slides.length;
-        if (index >= totalSlides) {
-            currentIndex = 0; // Loop back to the first slide
-        } else if (index < 0) {
-            currentIndex = totalSlides - 1; // Loop to the last slide
-        }
-
-        // Move the slides container
-        document.querySelector(".new-photos").style.transform = `translateX(-${currentIndex * 100}%)`;
-
-        // Update active dot
-        dots.forEach((dot, i) => {
-            dot.classList.toggle('active', i === currentIndex);
+        slides.forEach((slide, i) => {
+            slide.classList.toggle('active', i === index);
         });
+        dots.forEach((dot, i) => {
+            dot.classList.toggle('active', i === index);
+        });
+        currentSlide = index;
     }
 
-    nextBtn.addEventListener("click", () => {
-        currentIndex++;
-        showSlide(currentIndex);
-    });
+    function nextSlide() {
+        const nextIndex = (currentSlide + 1) % slides.length;
+        showSlide(nextIndex);
+    }
 
-    prevBtn.addEventListener("click", () => {
-        currentIndex--;
-        showSlide(currentIndex);
-    });
+    function prevSlide() {
+        const prevIndex = (currentSlide - 1 + slides.length) % slides.length;
+        showSlide(prevIndex);
+    }
 
-    // Add click event to dots
+    // Event listeners for buttons
+    nextButton.addEventListener('click', nextSlide);
+    prevButton.addEventListener('click', prevSlide);
+
+    // Event listeners for dots
     dots.forEach((dot, index) => {
         dot.addEventListener('click', () => {
-            currentIndex = index; // Set currentIndex to the index of the clicked dot
-            showSlide(currentIndex);
+            showSlide(index);
         });
     });
 
-    // Auto slide every 4 seconds
-    setInterval(() => {
-        currentIndex++;
-        showSlide(currentIndex);
-    }, 4000);
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight') nextSlide();
+        if (e.key === 'ArrowLeft') prevSlide();
+    });
+
+    // Auto-slide (optional, inspired by banner’s dynamic feel)
+    let autoSlide = setInterval(nextSlide, 4000);
+    document.querySelector('.new-gallery').addEventListener('mouseenter', () => clearInterval(autoSlide));
+    document.querySelector('.new-gallery').addEventListener('mouseleave', () => {
+        autoSlide = setInterval(nextSlide, 5000);
+    });
 });

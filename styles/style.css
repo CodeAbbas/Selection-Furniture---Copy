@@ -1,93 +1,130 @@
+.enhanced-gallery {
+   
+  padding: 20px 0 50px 0;
+}
 
 .new-gallery {
-  
   position: relative;
-  width: 100%;
-  max-width: auto; /* Set a max-width for larger screens */
-  aspect-ratio: 16/9; /* Maintain a 16:9 aspect ratio */
-  height: auto; /* Set height to auto to maintain aspect ratio */
-  margin: 0 auto; /* Center the gallery */
-  overflow: hidden;
-
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .new-photos {
-  display: flex;
-  transition: transform 0.5s ease; 
+  overflow: hidden;
+  position: relative;
+  height: 590px; /* Increased height for immersive view */
 }
 
 .new-slide {
-  min-width: 100%; 
-  height: 0; 
-  padding-top: 56.25%; 
-  position: relative; 
-}
-
-.new-slide img {
-  position: absolute; 
+  position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover; 
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.new-slide.active {
+  opacity: 1;
+}
+
+.new-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Ensures images fill without distortion */
+  border-radius: 12px; /* Soft corners like banner */
+  transition: transform 0.3s ease, opacity 0.3s ease; /* Inspired by banner hover */
+}
+
+.new-slide:hover img {
+  transform: scale(1.05); /* Subtle zoom on hover, like banner's scale effect */
+  opacity: 0.9;
 }
 
 .new-buttons {
   position: absolute;
   top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  width: 100%;
   display: flex;
   justify-content: space-between;
-  width: 95%; /* Adjust width as needed */
+  transform: translateY(-50%);
 }
 
 .new-prev, .new-next {
-  background: rgba(255, 255, 255, 0.7);
-  border-radius: 5px;
-  padding: 1px 5px;
-  cursor: pointer;
-  font-size: 18px;
-  transition: background 0.3s;
+ /* Matches banner's dark overlay */
+  border: none;
+  padding: 10px;
+  border-radius: 50%;
+  color: #fff;
+  transition: background 0.3s ease;
 }
 
 .new-prev:hover, .new-next:hover {
-  background: rgba(255, 255, 255, 1);
+  background: rgba(0, 0, 0, 0.8);
 }
-/*dots*/
-.new-dots {
-  display: flex;
-  justify-content: center;
+
+.dot-mid {
   text-align: center;
-  margin:-36px 0 auto;
+  margin-top: 20px;
+}
+
+.new-dots {
+  display: inline-flex;
+  list-style: none;
+  padding: 0;
+  margin:-126px 0 auto;
   list-style: none;
   background: rgba(255, 255, 255, 0.7);
   border-radius: 20px;
   padding: 8px;
-  position: absolute;
-  z-index: 1000;
-  left: 50%;
-  transform: translateX(-50%);
-  
 }
-.dot-mid{
-  width: 100%;
-  text-align: center;
-}
+
 .new-dots li {
-  width: 10px; /* Size of the dot */
-  height: 10px; /* Size of the dot */
-  background-color: #ccc; 
+  width: 12px;
+  height: 12px;
+  background: #ccc;
   border-radius: 50%;
   margin: 0 5px;
   cursor: pointer;
-  transition: background-color 0.3s;
+  transition: background 0.3s ease;
 }
 
 .new-dots li.active {
-  background-color: #000000; /* Active dot color */
+  background: #343a40; /* Matches banner's dark border */
 }
 
+.new-dots li:hover {
+  background: #666;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .new-photos {
+      height: 300px; /* Adjusted height for mobile */
+  }
+
+  .new-slide img {
+      height: 100%;
+  }
+
+  .new-prev, .new-next {
+      padding: 8px;
+  }
+
+  .new-dots li {
+      width: 10px;
+      height: 10px;
+  }
+}
+
+
+@media (max-width: 576px) {
+  .new-photos {
+      height: 250px; /* Further reduced for smaller screens */
+  }
+}
+/* Gallery section end*/
 
   /*UK Navbar*/
 .uk-navbar-container>.uk-container .uk-navbar-left {
@@ -124,7 +161,7 @@
 
 
 
-/**/
+/* featured-container */
 .featured-container {
   width: 100%;
 
@@ -632,3 +669,6 @@
   outline: none;
   box-shadow: 0 0 0 4px rgba(34, 34, 34, 0.5);
 }
+
+
+

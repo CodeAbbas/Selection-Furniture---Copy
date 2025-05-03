@@ -92,6 +92,9 @@ function createProductCard(product) {
     `;
 }
 
+
+//
+
 // Fetch products and populate slider
 document.addEventListener('DOMContentLoaded', () => {
     fetch('../product-admin/products.json')
