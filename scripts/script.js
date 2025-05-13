@@ -97,7 +97,7 @@ function createProductCard(product) {
 
 // Fetch products and populate slider
 document.addEventListener('DOMContentLoaded', () => {
-    fetch('/product-admin/products.json')
+    fetch('product-admin/products.json')
         .then(response => {
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
@@ -194,7 +194,7 @@ function createBestSellingCard(product) {
 
 // Fetch products and populate slider
 document.addEventListener('DOMContentLoaded', () => {
-    fetch('/product-admin/products.json')
+    fetch('product-admin/products.json')
         .then(response => {
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
