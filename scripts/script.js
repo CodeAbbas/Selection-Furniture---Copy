@@ -1,38 +1,99 @@
+// Centralized fetch function
+async function fetchProducts() {
+    try {
+        const response = await fetch('/product-admin/products.json'); // Use absolute path
+        if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+        return await response.json();
+    } catch (error) {
+        console.error('Error fetching products:', error);
+        throw error;
+    }
+}
 
-function initMap() { var elements = document.querySelectorAll('.js-map'); Array.prototype.forEach.call(elements, function (el) { var lat = +el.dataset.latitude, lng = +el.dataset.longitude, zoom = +el.dataset.zoom; if ((lat !== '') && (lng !== '') && (zoom > 0)) { var map = new google.maps.Map(el, { zoom: zoom, center: { lat: lat, lng: lng }, disableDefaultUI: true }); var marker = new google.maps.Marker({ map: map, animation: google.maps.Animation.DROP, position: { lat: lat, lng: lng } }); } }); }
+// Google Maps initialization
+function initMap() {
+    const elements = document.querySelectorAll('.js-map');
+    Array.prototype.forEach.call(elements, function (el) {
+        const lat = +el.dataset.latitude;
+        const lng = +el.dataset.longitude;
+        const zoom = +el.dataset.zoom;
+        if ((lat !== '') && (lng !== '') && (zoom > 0)) {
+            var map = new google.maps.Map(el, { zoom: zoom, center: { lat: lat, lng: lng }, disableDefaultUI: true });
+            var marker = new google.maps.Marker({ map: map, animation: google.maps.Animation.DROP, position: { lat: lat, lng: lng } });
+        }
+    });
+}
+
+// Product grid view switcher
 (function () {
-    var container = document.getElementById('products'); if (container) {
-        var grid = container.querySelector('.js-products-grid'), viewClass = 'tm-products-', optionSwitch = Array.prototype.slice.call(container.querySelectorAll('.js-change-view a')); function init() { optionSwitch.forEach(function (el, i) { el.addEventListener('click', function (ev) { ev.preventDefault(); _switch(this); }, false); }); }
-        function _switch(opt) { optionSwitch.forEach(function (el) { grid.classList.remove(viewClass + el.getAttribute('data-view')); }); grid.classList.add(viewClass + opt.getAttribute('data-view')); }
+    var container = document.getElementById('products');
+    if (container) {
+        var grid = container.querySelector('.js-products-grid'),
+            viewClass = 'tm-products-',
+            optionSwitch = Array.prototype.slice.call(container.querySelectorAll('.js-change-view a'));
+        function init() {
+            optionSwitch.forEach(function (el, i) {
+                el.addEventListener('click', function (ev) {
+                    ev.preventDefault();
+                    _switch(this);
+                }, false);
+            });
+        }
+        function _switch(opt) {
+            optionSwitch.forEach(function (el) {
+                grid.classList.remove(viewClass + el.getAttribute('data-view'));
+            });
+            grid.classList.add(viewClass + opt.getAttribute('data-view'));
+        }
         init();
     }
-})(); function increment(incrementor, target) {
-    var value = parseInt(document.getElementById(target).value, 10); value = isNaN(value) ? 0 : value; if (incrementor < 0) { if (value > 1) { value += incrementor; } } else { value += incrementor; }
+})();
+
+// Quantity incrementer
+function increment(incrementor, target) {
+    var value = parseInt(document.getElementById(target).value, 10);
+    value = isNaN(value) ? 0 : value;
+    if (incrementor < 0) {
+        if (value > 1) { value += incrementor; }
+    } else {
+        value += incrementor;
+    }
     document.getElementById(target).value = value;
 }
-(function () { UIkit.scroll('.js-scroll-to-description', { duration: 300, offset: 58 }); })(); (function () { UIkit.util.on('.js-product-switcher', 'show', function () { UIkit.update(); }); })(); (function () { var addToCartButtons = document.querySelectorAll('.js-add-to-cart'); Array.prototype.forEach.call(addToCartButtons, function (el) { el.onclick = function () { UIkit.offcanvas('#cart-offcanvas').show(); }; }); })(); (function () {
-    var addToButtons = document.querySelectorAll('.js-add-to'); Array.prototype.forEach.call(addToButtons, function (el) {
-        var link; var message = '<span class="uk-margin-small-right" uk-icon=\'check\'></span>Added to '; var links = { favorites: '<a href="/favorites">favorites</a>', compare: '<a href="/compare">compare</a>', }; if (el.classList.contains('js-add-to-favorites')) { link = links.favorites; }; if (el.classList.contains('js-add-to-compare')) { link = links.compare; }
+
+// UIkit interactions
+(function () { UIkit.scroll('.js-scroll-to-description', { duration: 300, offset: 58 }); })();
+(function () { UIkit.util.on('.js-product-switcher', 'show', function () { UIkit.update(); }); })();
+(function () {
+    var addToCartButtons = document.querySelectorAll('.js-add-to-cart');
+    Array.prototype.forEach.call(addToCartButtons, function (el) {
+        el.onclick = function () { UIkit.offcanvas('#cart-offcanvas').show(); };
+    });
+})();
+(function () {
+    var addToButtons = document.querySelectorAll('.js-add-to');
+    Array.prototype.forEach.call(addToButtons, function (el) {
+        var link;
+        var message = '<span class="uk-margin-small-right" uk-icon=\'check\'></span>Added to ';
+        var links = { favorites: '<a href="/favorites">favorites</a>', compare: '<a href="/compare">compare</a>' };
+        if (el.classList.contains('js-add-to-favorites')) { link = links.favorites; }
+        if (el.classList.contains('js-add-to-compare')) { link = links.compare; }
         el.onclick = function () {
             if (!this.classList.contains('js-added-to')) { UIkit.notification({ message: message + link, pos: 'bottom-right' }); }
-            this.classList.toggle('tm-action-button-active'); this.classList.toggle('js-added-to');
+            this.classList.toggle('tm-action-button-active');
+            this.classList.toggle('js-added-to');
         };
     });
 })();
 
-// Function to create product card HTML
+// Product card creation
 function createProductCard(product) {
-    // Validate product data
-    if (!product || !product.title) {
-        return '';
-    }
+    if (!product || !product.title) { return ''; }
 
-    // Get price from first variation or fallback
-    const price = product.variations && product.variations.sizes && product.variations.sizes.length > 0 
-        ? `$${parseFloat(product.variations.sizes[0].price || 0).toFixed(2)}`
+    const price = product.variations && product.variations.sizes && product.variations.sizes.length > 0
+        ? `£${parseFloat(product.variations.sizes[0].price || 0).toFixed(2)}`
         : 'Contact for Price';
 
-    // Determine label
     let label = '';
     let labelClass = '';
     let labelBg = '';
@@ -50,8 +111,7 @@ function createProductCard(product) {
         labelBg = '#dc3545';
     }
 
-    // Get first image or fallback
-    const image = product.images && product.images.length > 0 
+    const image = product.images && product.images.length > 0
         ? product.images[0]
         : 'https://via.placeholder.com/400x300?text=No+Image';
 
@@ -73,14 +133,14 @@ function createProductCard(product) {
                     <div class="tm-product-card-prices">
                         ${product.oldPrice ? `<del class="uk-text-meta">£${product.oldPrice}</del>` : ''}
                         <div class="tm-product-card-price">£${product.variations?.sizes?.[0]?.price || product.price}</div>
+                    </div>
+                    <div class="tm-product-card-add">
+                        <div class="uk-text-meta tm-product-card-actions">
+                            <a class="tm-product-card-action js-add-to js-add-to-favorites" title="Add to favorites">
+                                <span uk-icon="icon: heart; ratio: .95;"></span>
+                                <span class="tm-product-card-action-text">Add to favorites</span>
+                            </a>
                         </div>
-                        <div class="tm-product-card-add">
-                            <div class="uk-text-meta tm-product-card-actions">
-                                <a class="tm-product-card-action js-add-to js-add-to-favorites" title="Add to favorites">
-                                    <span uk-icon="icon: heart; ratio: .95;"></span>
-                                    <span class="tm-product-card-action-text">Add to favorites</span>
-                                </a>
-                            </div>
                         <button class="uk-button uk-button-primary tm-product-card-add-button tm-shine js-add-to-cart">
                             <span class="tm-product-card-add-button-icon" uk-icon="cart"></span>
                             <span class="tm-product-card-add-button-text">add to cart</span>
@@ -92,67 +152,7 @@ function createProductCard(product) {
     `;
 }
 
-
-//
-
-// Fetch products and populate slider
-document.addEventListener('DOMContentLoaded', () => {
-    fetch('product-admin/products.json')
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`HTTP error! Status: ${response.status}`);
-            }
-            return response.json();
-        })
-        .then(products => {
-            const slider = document.getElementById('product-slider');
-            if (!slider) {
-                console.error('Slider element not found');
-                return;
-            }
-
-            // Filter for featured products and limit to 8
-            const featuredProducts = products
-                .filter(p => p && (p.newArrival || p.topSelling || (p.inStock && p.inStock > 0)))
-                .slice(0, 8);
-
-            if (featuredProducts.length === 0) {
-                slider.innerHTML = '<li style="padding: 15px; text-align: center; font-size: 1rem; color: #111;">No trending products available</li>';
-                return;
-            }
-
-            // Generate product cards
-            featuredProducts.forEach(product => {
-                const cardHtml = createProductCard(product);
-                if (cardHtml) {
-                    slider.innerHTML += cardHtml;
-                }
-            });
-
-            // Initialize UIkit slider after content is loaded
-            try {
-                UIkit.slider(slider.parentElement, {
-                    autoplay: true,
-                    autoplayInterval: 3000,
-                    finite: false,
-                    pauseOnHover: true
-                });
-            } catch (e) {
-                console.error('UIkit slider initialization failed:', e);
-                slider.innerHTML = '<li style="padding: 15px; text-align: center; font-size: 1rem; color: #111;">Error initializing slider</li>';
-            }
-        })
-        .catch(error => {
-            console.error('Error loading products:', error);
-            const slider = document.getElementById('product-slider');
-            if (slider) {
-                slider.innerHTML = '<li style="padding: 15px; text-align: center; font-size: 1rem; color: #111;">Error loading products: ' + error.message + '</li>';
-            }
-        });
-});
-
-
-// Best Selling Slider
+// Best Selling card creation
 function createBestSellingCard(product) {
     if (!product || !product.title || !product.id) return '';
 
@@ -160,10 +160,7 @@ function createBestSellingCard(product) {
     const productUrl = `product.html?id=${product.id}`;
 
     const ratingText = product.reviews?.length
-        ? (
-            product.reviews.reduce((sum, review) => sum + parseFloat(review.rating || 0), 0) /
-            product.reviews.length
-        ).toFixed(1)
+        ? (product.reviews.reduce((sum, review) => sum + parseFloat(review.rating || 0), 0) / product.reviews.length).toFixed(1)
         : 'No Rating';
 
     const categoryText = `${product.category || ''}${product.subcategory ? ' / ' + product.subcategory : ''}`;
@@ -189,104 +186,100 @@ function createBestSellingCard(product) {
     `;
 }
 
-// best selling v1
+// Featured Products
+document.addEventListener('DOMContentLoaded', async () => {
+    const slider = document.getElementById('product-slider');
+    if (!slider) return;
 
+    try {
+        const products = await fetchProducts();
+        const featuredProducts = products
+            .filter(p => p && (p.newArrival || p.topSelling || (p.inStock && p.inStock > 0)))
+            .slice(0, 8);
 
-// Fetch products and populate slider
-document.addEventListener('DOMContentLoaded', () => {
-    fetch('product-admin/products.json')
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`HTTP error! Status: ${response.status}`);
-            }
-            return response.json();
-        })
-        .then(products => {
-            const slider = document.getElementById('best-selling-slider');
-            if (!slider) {
-                console.error('Best selling slider element not found');
-                return;
-            }
+        if (featuredProducts.length === 0) {
+            slider.innerHTML = '<li style="padding: 15px; text-align: center; font-size: 1rem; color: #111;">No trending products available</li>';
+            return;
+        }
 
-            // Filter for best-selling products and limit to 12
-            const bestSellingProducts = products
-                .filter(p => p && (p.topSelling || p.newArrival || (p.inStock && p.inStock > 0)))
-                .slice(0, 12);
-
-            if (bestSellingProducts.length === 0) {
-                slider.innerHTML = '<li style="padding: 20px; text-align: center; font-size: 1.2rem; color: #333;">No best-selling products available</li>';
-                return;
-            }
-
-            // Generate product cards
-            bestSellingProducts.forEach(product => {
-                const cardHtml = createBestSellingCard(product);
-                if (cardHtml) {
-                    slider.innerHTML += cardHtml;
-                }
-            });
-
-            // Initialize UIkit slider after content is loaded
-            try {
-                UIkit.slider(slider.parentElement, {
-                    finite: true,
-                    sets: true
-                });
-            } catch (e) {
-                console.error('UIkit slider initialization failed for best-selling slider:', e);
-                slider.innerHTML = '<li style="padding: 20px; text-align: center; font-size: 1.2rem; color: #333;">Error initializing slider</li>';
-            }
-        })
-        .catch(error => {
-            console.error('Error loading products for best-selling slider:', error);
-            const slider = document.getElementById('best-selling-slider');
-            if (slider) {
-                slider.innerHTML = '<li style="padding: 20px; text-align: center; font-size: 1.2rem; color: #333;">Error loading products: ' + error.message + '</li>';
-            }
+        featuredProducts.forEach(product => {
+            const cardHtml = createProductCard(product);
+            if (cardHtml) slider.innerHTML += cardHtml;
         });
+
+        UIkit.slider(slider.parentElement, {
+            autoplay: true,
+            autoplayInterval: 3000,
+            finite: false,
+            pauseOnHover: true
+        });
+    } catch (error) {
+        slider.innerHTML = `<li style="padding: 15px; text-align: center; font-size: 1rem; color: #111;">Error loading products: ${error.message}</li>`;
+    }
 });
 
+// Best Selling Slider
+document.addEventListener('DOMContentLoaded', async () => {
+    const slider = document.getElementById('best-selling-slider');
+    if (!slider) return;
+
+    try {
+        const products = await fetchProducts();
+        const bestSellingProducts = products
+            .filter(p => p && (p.topSelling || p.newArrival || (p.inStock && p.inStock > 0)))
+            .slice(0, 12);
+
+        if (bestSellingProducts.length === 0) {
+            slider.innerHTML = '<li style="padding: 20px; text-align: center; font-size: 1.2rem; color: #333;">No best-selling products available</li>';
+            return;
+        }
+
+        bestSellingProducts.forEach(product => {
+            const cardHtml = createBestSellingCard(product);
+            if (cardHtml) slider.innerHTML += cardHtml;
+        });
+
+        UIkit.slider(slider.parentElement, { finite: true, sets: true });
+    } catch (error) {
+        slider.innerHTML = `<li style="padding: 20px; text-align: center; font-size: 1.2rem; color: #333;">Error loading products: ${error.message}</li>`;
+    }
+});
 
 // Lookbook
-document.addEventListener('DOMContentLoaded', () => {
-    fetch('product-admin/products.json')
-      .then(res => {
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        return res.json();
-      })
-      .then(products => {
-        const grid = document.getElementById('lookbook-grid');
-        if (!grid) return;
-  
-        // Get one product per category
+document.addEventListener('DOMContentLoaded', async () => {
+    const grid = document.getElementById('lookbook-grid');
+    if (!grid) return;
+
+    try {
+        const products = await fetchProducts();
         const productsByCategory = products.reduce((acc, product) => {
-          if (!acc[product.category]) {
-            acc[product.category] = product;
-          }
-          return acc;
+            if (!acc[product.category]) acc[product.category] = product;
+            return acc;
         }, {});
         const lookbookItems = Object.values(productsByCategory);
-  
+
         lookbookItems.forEach(product => {
-          const image = product.images?.[0] || 'https://via.placeholder.com/600';
-          const title = product.category;
-          const link = `category.html?cat=${encodeURIComponent(product.category)}`;
-  
-          const item = document.createElement('div');
-          item.className = 'lookbook-item';
-          item.innerHTML = `
-            <a href="${link}" class="uk-inline-clip uk-transition-toggle" tabindex="0">
-              <img src="${image}" alt="${title}" class="uk-width-1-1 uk-height-medium uk-object-cover">
-              <div class="uk-overlay uk-overlay-primary uk-position-cover uk-flex uk-flex-center uk-flex-middle uk-transition-fade">
-                <div class="lookbook-content">
-                  <h3 class="uk-text-uppercase uk-margin-remove">${title}</h3>
-                  <button class="uk-button uk-button-primary uk-button-small uk-margin-small-top">Shop Now</button>
-                </div>
-              </div>
-            </a>
-          `;
-          grid.appendChild(item);
+            const image = product.images?.[0] || 'https://via.placeholder.com/600';
+            const title = product.category;
+            const link = `category.html?cat=${encodeURIComponent(product.category)}`;
+
+            const item = document.createElement('div');
+            item.className = 'lookbook-item';
+            item.innerHTML = `
+                <a href="${link}" class="uk-inline-clip uk-transition-toggle" tabindex="0">
+                    <img src="${image}" alt="${title}" class="uk-width-1-1 uk-height-medium uk-object-cover">
+                    <div class="uk-overlay uk-overlay-primary uk-position-cover uk-flex uk-flex-center uk-flex-middle uk-transition-fade">
+                        <div class="lookbook-content">
+                            <h3 class="uk-text-uppercase uk-margin-remove">${title}</h3>
+                            <button class="uk-button uk-button-primary uk-button-small uk-margin-small-top">Shop Now</button>
+                        </div>
+                    </div>
+                </a>
+            `;
+            grid.appendChild(item);
         });
-      })
-      .catch(err => console.error('Lookbook load error:', err));
-  });
+    } catch (error) {
+        console.error('Lookbook load error:', error);
+        grid.innerHTML = '<div style="padding: 20px; text-align: center; color: #333;">Error loading lookbook: ' + error.message + '</div>';
+    }
+});
