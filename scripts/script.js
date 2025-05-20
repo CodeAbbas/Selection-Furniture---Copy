@@ -92,7 +92,7 @@ function createProductCard(product) {
 
     const price = product.variations && product.variations.sizes && product.variations.sizes.length > 0
         ? `£${parseFloat(product.variations.sizes[0].price || 0).toFixed(2)}`
-        : 'Contact for Price';
+        : `£${parseFloat(product.price || 0).toFixed(2)}`;
 
     let label = '';
     let labelClass = '';
@@ -115,39 +115,64 @@ function createProductCard(product) {
         ? product.images[0]
         : 'https://via.placeholder.com/400x300?text=No+Image';
 
+    // Calculate average rating
+    const averageRating = product.reviews && product.reviews.length
+        ? (product.reviews.reduce((sum, review) => sum + parseFloat(review.rating || 0), 0) / product.reviews.length).toFixed(1)
+        : 'No Rating';
+
+    // Category and subcategory
+    const categoryText = `${product.category || ''}${product.subcategory ? ' / ' + product.subcategory : ''}`;
+
     return `
         <li style="min-width: 0;">
-            <div class="tm-product-card uk-card" >
-                <div class="uk-card-media-top uk-position-relative">
-                    <img src="${product.images[0]}" alt="${product.title}" style="height: 240px; object-fit: cover; width: 100%;">
-                    <div class="uk-position-top-left uk-label-container">
-                        ${product.topSelling ? '<span class="uk-label uk-label-warning">Top Selling</span>' : ''}
-                        ${product.newArrival ? '<span class="uk-label uk-label-success">New Arrival</span>' : ''}
-                        ${product.outStock ? '<span class="uk-label uk-label-danger">Out of Stock</span>' : ''}
+            <article class="tm-product-card uk-card">
+                <div class="tm-product-card-media">
+                    <div class="tm-ratio tm-ratio-4-3">
+                        <a class="tm-media-box" href="product.html?id=${product.id}">
+                            <div class="tm-product-card-labels">
+                                ${product.topSelling ? '<span class="uk-label uk-label-warning">Top Selling</span>' : ''}
+                                ${product.newArrival ? '<span class="uk-label uk-label-success">New Arrival</span>' : ''}
+                                ${product.outStock ? '<span class="uk-label uk-label-danger">Out of stock</span>' : ''}
+                            </div>
+                            <figure class="tm-media-box-wrap">
+                                <img src="${image}" alt="${product.title}" style="object-fit: cover; width: 100%; height: 100%;" />
+                            </figure>
+                        </a>
                     </div>
                 </div>
-                <h3 class="tm-product-card-title" style="padding: 0.625rem 0 0 0.625rem;">
-                    <a class="uk-link-heading text-bold" style="font-size: 1.2rem; " href="product.html?id=${product.id}">${product.title}</a>
-                </h3>
-                <div class="tm-product-card-shop" style="padding: 0 0 1rem 0.625rem;">
-                    <div class="tm-product-card-prices">
-                        ${product.oldPrice ? `<del class="uk-text-meta">£${product.oldPrice}</del>` : ''}
-                        <div class="tm-product-card-price">£${product.variations?.sizes?.[0]?.price || product.price}</div>
+                <div class="tm-product-card-body">
+                    <div class="tm-product-card-info">
+                        <div class="uk-text-meta uk-margin-xsmall-bottom">${categoryText}</div>
+                        <h3 class="tm-product-card-title">
+                            <a class="uk-link-heading text-bold" href="product.html?id=${product.id}">${product.title}</a>
+                        </h3>
+                        <ul class="uk-list uk-text-small tm-product-card-properties">
+                            <li><span class="uk-text-muted">Size: </span><span>${product.specifications?.size || 'N/A'}</span></li>
+                            <li><span class="uk-text-muted">Color: </span><span>${product.specifications?.color || 'N/A'}</span></li>
+                            <li><span class="uk-text-muted">Material: </span><span>${product.specifications?.material || 'N/A'}</span></li>
+                            <li><span class="uk-text-muted">Rating: </span><span>${averageRating}</span></li>
+                        </ul>
                     </div>
-                    <div class="tm-product-card-add">
-                        <div class="uk-text-meta tm-product-card-actions">
-                            <a class="tm-product-card-action js-add-to js-add-to-favorites" title="Add to favorites">
-                                <span uk-icon="icon: heart; ratio: .95;"></span>
-                                <span class="tm-product-card-action-text">Add to favorites</span>
-                            </a>
+                    <div class="tm-product-card-shop">
+                        <div class="tm-product-card-prices">
+                            ${product.oldPrice ? `<del class="uk-text-meta">£${product.oldPrice}</del>` : ''}
+                            <div class="tm-product-card-price">${price}</div>
                         </div>
-                        <button class="uk-button uk-button-primary tm-product-card-add-button tm-shine js-add-to-cart">
-                            <span class="tm-product-card-add-button-icon" uk-icon="cart"></span>
-                            <span class="tm-product-card-add-button-text">add to cart</span>
-                        </button>
+                        <div class="tm-product-card-add">
+                            <div class="uk-text-meta tm-product-card-actions">
+                                <a class="tm-product-card-action js-add-to js-add-to-favorites" title="Add to favorites">
+                                    <span uk-icon="icon: heart; ratio: .95;"></span>
+                                    <span class="tm-product-card-action-text">Add to favorites</span>
+                                </a>
+                            </div>
+                            <button class="uk-button uk-button-primary tm-product-card-add-button tm-shine js-add-to-cart">
+                                <span class="tm-product-card-add-button-icon" uk-icon="cart"></span>
+                                <span class="tm-product-card-add-button-text">add to cart</span>
+                            </button>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </article>
         </li>
     `;
 }
@@ -189,7 +214,7 @@ function createBestSellingCard(product) {
 // Featured Products
 document.addEventListener('DOMContentLoaded', async () => {
     const slider = document.getElementById('product-slider');
-    if (!slider) return;
+    const container = document.querySelector('.featured-container');
 
     try {
         const products = await fetchProducts();
@@ -198,23 +223,44 @@ document.addEventListener('DOMContentLoaded', async () => {
             .slice(0, 8);
 
         if (featuredProducts.length === 0) {
-            slider.innerHTML = '<li style="padding: 15px; text-align: center; font-size: 1rem; color: #111;">No trending products available</li>';
+            if (slider) {
+                slider.innerHTML = '<li style="padding: 15px; text-align: center; font-size: 1rem; color: #111;">No trending products available</li>';
+            }
+            if (container) {
+                container.innerHTML = '<div style="padding: 15px; text-align: center; font-size: 1rem; color: #111;">No trending products available</div>';
+            }
             return;
         }
 
         featuredProducts.forEach(product => {
             const cardHtml = createProductCard(product);
-            if (cardHtml) slider.innerHTML += cardHtml;
+            if (cardHtml) {
+                if (slider) {
+                    slider.innerHTML += cardHtml;
+                }
+                if (container) {
+                    const card = document.createElement('div');
+                    card.innerHTML = cardHtml;
+                    container.appendChild(card.querySelector('article'));
+                }
+            }
         });
 
-        UIkit.slider(slider.parentElement, {
-            autoplay: true,
-            autoplayInterval: 3000,
-            finite: false,
-            pauseOnHover: true
-        });
+        if (slider) {
+            UIkit.slider(slider.parentElement, {
+                autoplay: true,
+                autoplayInterval: 3000,
+                finite: false,
+                pauseOnHover: true
+            });
+        }
     } catch (error) {
-        slider.innerHTML = `<li style="padding: 15px; text-align: center; font-size: 1rem; color: #111;">Error loading products: ${error.message}</li>`;
+        if (slider) {
+            slider.innerHTML = `<li style="padding: 15px; text-align: center; font-size: 1rem; color: #111;">Error loading products: ${error.message}</li>`;
+        }
+        if (container) {
+            container.innerHTML = `<div style="padding: 15px; text-align: center; font-size: 1rem; color: #111;">Error loading products: ${error.message}</div>`;
+        }
     }
 });
 
