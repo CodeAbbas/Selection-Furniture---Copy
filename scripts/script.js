@@ -1,7 +1,7 @@
 // Centralized fetch function
 async function fetchProducts() {
     try {
-        const response = await fetch('/product-admin/products.json'); // Use absolute path
+        const response = await fetch('product-admin/products.json'); // Use absolute path
         if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
         return await response.json();
     } catch (error) {
