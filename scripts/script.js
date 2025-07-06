@@ -65,26 +65,53 @@ function increment(incrementor, target) {
 (function () { UIkit.scroll('.js-scroll-to-description', { duration: 300, offset: 58 }); })();
 (function () { UIkit.util.on('.js-product-switcher', 'show', function () { UIkit.update(); }); })();
 (function () {
-    var addToCartButtons = document.querySelectorAll('.js-add-to-cart');
-    Array.prototype.forEach.call(addToCartButtons, function (el) {
-        el.onclick = function () { UIkit.offcanvas('#cart-offcanvas').show(); };
+    // This function now attaches the event listener to the document,
+    // so it works for dynamically created product cards.
+    document.addEventListener('click', function(event) {
+        const button = event.target.closest('.js-add-to-cart');
+        if (!button) return;
+
+        // Find the product ID from the card's link
+        const card = button.closest('.tm-product-card');
+        if (card) {
+            const link = card.querySelector('a.tm-media-box');
+            const urlParams = new URLSearchParams(new URL(link.href).search);
+            const productId = urlParams.get('id');
+            
+            if (productId) {
+                addToCart(productId, 1); // Add one item to the cart
+                UIkit.offcanvas('#cart-offcanvas').show(); // Show the off-canvas cart
+            }
+        }
     });
-})();
+})(); //add to cart button
 (function () {
-    var addToButtons = document.querySelectorAll('.js-add-to');
-    Array.prototype.forEach.call(addToButtons, function (el) {
-        var link;
-        var message = '<span class="uk-margin-small-right" uk-icon=\'check\'></span>Added to ';
-        var links = { favorites: '<a href="/favorites">favorites</a>', compare: '<a href="/compare">compare</a>' };
-        if (el.classList.contains('js-add-to-favorites')) { link = links.favorites; }
-        if (el.classList.contains('js-add-to-compare')) { link = links.compare; }
-        el.onclick = function () {
-            if (!this.classList.contains('js-added-to')) { UIkit.notification({ message: message + link, pos: 'bottom-right' }); }
-            this.classList.toggle('tm-action-button-active');
-            this.classList.toggle('js-added-to');
-        };
+    // Favorites handler
+    document.addEventListener('click', function(event) {
+        const button = event.target.closest('.js-add-to-favorites');
+        if (!button) return;
+
+        const card = button.closest('.tm-product-card');
+        if (card) {
+            const link = card.querySelector('a.tm-media-box');
+            if (link) {
+                const urlParams = new URLSearchParams(new URL(link.href).search);
+                const productId = urlParams.get('id');
+                if (productId) {
+                    toggleFavorite(productId);
+                }
+            }
+        }
     });
-})();
+    // Compare handler
+    document.addEventListener('click', function(event) {
+        const button = event.target.closest('.js-add-to-compare');
+        if (!button) return;
+        
+        UIkit.notification({ message: "<span uk-icon='icon: check'></span> Added to compare (demo)", pos: 'bottom-right' });
+        button.classList.toggle('tm-action-button-active');
+    });
+})(); //favorites
 
 // Product card creation
 function createProductCard(product) {
@@ -147,9 +174,6 @@ function createProductCard(product) {
                             <a class="uk-link-heading text-bold" href="product.html?id=${product.id}">${product.title}</a>
                         </h3>
                         <ul class="uk-list uk-text-small tm-product-card-properties">
-                            <li><span class="uk-text-muted">Size: </span><span>${product.specifications?.size || 'N/A'}</span></li>
-                            <li><span class="uk-text-muted">Color: </span><span>${product.specifications?.color || 'N/A'}</span></li>
-                            <li><span class="uk-text-muted">Material: </span><span>${product.specifications?.material || 'N/A'}</span></li>
                             <li><span class="uk-text-muted">Rating: </span><span>${averageRating}</span></li>
                         </ul>
                     </div>
@@ -162,9 +186,9 @@ function createProductCard(product) {
                             <div class="uk-text-meta tm-product-card-actions">
                                 <a class="tm-product-card-action js-add-to js-add-to-favorites" title="Add to favorites">
                                     <span uk-icon="icon: heart; ratio: .95;"></span>
-                                    <span class="tm-product-card-action-text">Add to favorites</span>
                                 </a>
                             </div>
+                            <!-- This button now triggers the event listener we set up -->
                             <button class="uk-button uk-button-primary tm-product-card-add-button tm-shine js-add-to-cart">
                                 <span class="tm-product-card-add-button-icon" uk-icon="cart"></span>
                                 <span class="tm-product-card-add-button-text">add to cart</span>
