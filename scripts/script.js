@@ -135,7 +135,7 @@ function createProductCard(product) {
                                 ${product.outStock ? '<span class="uk-label uk-label-danger">Out of stock</span>' : ''}
                             </div>
                             <figure class="tm-media-box-wrap">
-                                <img src="${image}" alt="${product.title}" style="object-fit: cover; width: 100%; height: 100%;" />
+                                <img src="${image}" alt="${product.title}" style="object-fit: cover; width: 100%; height: 100%; " loading="lazy"/>
                             </figure>
                         </a>
                     </div>
@@ -220,14 +220,14 @@ document.addEventListener('DOMContentLoaded', async () => {
         const products = await fetchProducts();
         const featuredProducts = products
             .filter(p => p && (p.newArrival || p.topSelling || (p.inStock && p.inStock > 0)))
-            .slice(0, 8);
+            .slice(0, 6); // Reduced to 6 for faster mobile loading
 
         if (featuredProducts.length === 0) {
             if (slider) {
-                slider.innerHTML = '<li style="padding: 15px; text-align: center; font-size: 1rem; color: #111;">No trending products available</li>';
+                slider.innerHTML = '<li class="uk-text-center uk-padding-small">No trending products available</li>';
             }
             if (container) {
-                container.innerHTML = '<div style="padding: 15px; text-align: center; font-size: 1rem; color: #111;">No trending products available</div>';
+                container.innerHTML = '<div class="uk-text-center uk-padding-small">No trending products available</div>';
             }
             return;
         }
@@ -240,8 +240,9 @@ document.addEventListener('DOMContentLoaded', async () => {
                 }
                 if (container) {
                     const card = document.createElement('div');
+                    card.className = 'uk-width-1-1 uk-width-1-2@s uk-width-1-3@m uk-width-1-4@l';
                     card.innerHTML = cardHtml;
-                    container.appendChild(card.querySelector('article'));
+                    container.appendChild(card);
                 }
             }
         });
@@ -249,17 +250,19 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (slider) {
             UIkit.slider(slider.parentElement, {
                 autoplay: true,
-                autoplayInterval: 3000,
-                finite: false,
-                pauseOnHover: true
+                autoplayInterval: 4000,
+                finite: true, // Better UX on mobile
+                pauseOnHover: true,
+                center: false,
+                sets: false // One card per slide
             });
         }
     } catch (error) {
         if (slider) {
-            slider.innerHTML = `<li style="padding: 15px; text-align: center; font-size: 1rem; color: #111;">Error loading products: ${error.message}</li>`;
+            slider.innerHTML = `<li class="uk-text-center uk-padding-small">Error loading products: ${error.message}</li>`;
         }
         if (container) {
-            container.innerHTML = `<div style="padding: 15px; text-align: center; font-size: 1rem; color: #111;">Error loading products: ${error.message}</div>`;
+            container.innerHTML = `<div class="uk-text-center uk-padding-small">Error loading products: ${error.message}</div>`;
         }
     }
 });

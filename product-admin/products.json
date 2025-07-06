@@ -104,7 +104,7 @@
   {
     "id": 1741361461691,
     "title": "Lisbon Sliding Wardrobe",
-    "price": null,
+    "price": 375,
     "category": "Wardrobe",
     "subcategory": "Sliding",
     "inStock": 5,
@@ -176,7 +176,7 @@
   {
     "id": 1746106445829,
     "title": "RUGBY WHITE GLOSS BED",
-    "price": null,
+    "price": 549,
     "oldPrice": 575,
     "category": "Bed",
     "subcategory": "High Gloss",
@@ -198,7 +198,7 @@
       }
     ],
     "relatedProducts": [
-      null
+      1, 2, 3
     ],
     "images": [
       "https://slidingwardrobes4u.com/wp-content/uploads/2021/03/2-13.jpg",
