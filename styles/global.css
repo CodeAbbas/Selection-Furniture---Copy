@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap");
+
 @-webkit-keyframes uk-spinner-rotate {
     0% {
         -webkit-transform: rotate(0deg);
@@ -40,7 +41,8 @@
         transform: rotate(450deg)
     }
 }
-:root{
+
+:root {
     --color2: #999;
 }
 
@@ -63,7 +65,7 @@
 }
 
 html {
-    
+
     font-family: "Space Grotesk", sans-serif;
     font-size: 16px;
     font-weight: 400;
@@ -75,48 +77,49 @@ html {
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility
 }
+
 body {
     font-family: "Space Grotesk", sans-serif;
     --sb-track-color: #ffffff;
     --sb-thumb-color: rgb(31 41 55);
     --sb-size: 5px;
 }
+
 body::-webkit-scrollbar {
     width: var(--sb-size);
-  }
-  
-  body::-webkit-scrollbar-track {
+}
+
+body::-webkit-scrollbar-track {
     background: var(--sb-track-color);
     border-radius: 3px;
-  }
-  
-  body::-webkit-scrollbar-thumb {
+}
+
+body::-webkit-scrollbar-thumb {
     background: var(--sb-thumb-color);
     border-radius: 3px;
-  }
-  
-  @supports not selector(::-webkit-scrollbar) {
+}
+
+@supports not selector(::-webkit-scrollbar) {
     body {
-        scrollbar-color: var(--sb-thumb-color)
-                       var(--sb-track-color);
+        scrollbar-color: var(--sb-thumb-color) var(--sb-track-color);
     }
-  }
+}
 
 aside::-webkit-scrollbar {
     width: var(--sb-size);
-  }
-  
-  aside::-webkit-scrollbar-track {
+}
+
+aside::-webkit-scrollbar-track {
     background: var(--sb-track-color);
     border-radius: 3px;
-  }
-  
-  aside::-webkit-scrollbar-thumb {
+}
+
+aside::-webkit-scrollbar-thumb {
     background: var(--sb-thumb-color);
     border-radius: 3px;
-  }
-  
-  
+}
+
+
 
 body,
 ol>li>ol,
@@ -2298,7 +2301,8 @@ select.uk-form-width-xsmall {
     background-color: #f0506e;
     color: #fff
 }
-.uk-level-out{
+
+.uk-level-out {
     background-color: gray;
     color: #fff;
 }
@@ -2584,18 +2588,21 @@ ul.uk-nav-sub {
 .uk-nav-default>li>a:hover {
     color: #666
 }
-.custom-user-icon{
+
+.custom-user-icon {
     color: #000;
 }
-.aside-user{
-    
+
+.aside-user {
+
     color: white;
     margin-left: -5px;
     margin-right: 6px;
     margin-top: -4px;
     height: 100%;
 }
-.aside-user span{
+
+.aside-user span {
     filter: invert(36%) sepia(100%) saturate(0%) hue-rotate(180deg) brightness(100%) contrast(100%);
 }
 
@@ -2989,6 +2996,17 @@ ul.uk-nav-sub {
     padding: 5px 10px;
     background: 0 0;
     color: var(--color2)
+}
+
+.uk-subnav-pill>*>a {
+    border-radius: 4px;
+    padding: 8px 20px;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    transition: all 0.2s ease-in-out;
+    background-color: #fff;
+    color: #666;
+    border: 1px solid #e5e5e5;
 }
 
 .uk-subnav-pill>*>a:focus,
@@ -4800,7 +4818,7 @@ ul.uk-nav-sub {
     font-size: .875rem;
     line-height: 1.5;
     color: var(--color2);
-    
+
 }
 
 .uk-text-large {
@@ -5538,7 +5556,7 @@ iframe.uk-cover {
 
 .uk-logo {
     font-size: 1.5rem;
-    color: #666; 
+    color: #666;
     font-weight: 500;
     text-decoration: none
 }
@@ -6951,9 +6969,11 @@ iframe.uk-cover {
 .uk-light .uk-search-toggle {
     color: rgba(255, 255, 255, .5)
 }
-.uk-navbar-nav>li>a{
+
+.uk-navbar-nav>li>a {
     color: var(--color2);
 }
+
 .uk-light .uk-search-default .uk-search-input {
     background-color: transparent;
     border-color: rgba(255, 255, 255, .2)
@@ -7351,12 +7371,14 @@ iframe.uk-cover {
     margin-right: 5px !important;
     color: #000;
 }
+
 .tm-toolbar-container {
     z-index: 1005;
 }
 
 .tm-toolbar-container:not(.uk-navbar-transparent) {
-    background: #efefef /*Top navbar color*/
+    background: #efefef
+        /*Top navbar color*/
 
 }
 
@@ -7381,7 +7403,8 @@ iframe.uk-cover {
 .tm-navbar-container {
     border-bottom: 1px solid #e5e5e5
 }
-.uk-link-muted{
+
+.uk-link-muted {
     color: black;
 }
 
@@ -7521,7 +7544,7 @@ iframe.uk-cover {
 }
 
 .tm-product-card-body {
-    
+
     display: flex;
     -webkit-box-orient: vertical;
     -webkit-box-direction: normal;
@@ -8017,8 +8040,9 @@ iframe.uk-cover {
     .tm-product-add-button {
         padding: 0 25px
     }
-    .uk-logo span{
-       font-size: 1px;
+
+    .uk-logo span {
+        font-size: 1px;
     }
 }
 
@@ -8402,5 +8426,3 @@ iframe.uk-cover {
 }
 
 /* slide*/
-
-

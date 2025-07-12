@@ -1,14 +1,16 @@
 // Centralized fetch function
 async function fetchProducts() {
-    try {
-        const response = await fetch('product-admin/products.json'); // Use absolute path
-        if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
-        return await response.json();
-    } catch (error) {
-        console.error('Error fetching products:', error);
-        throw error;
+        try {
+            const response = await fetch('product-admin/products.json');
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return await response.json();
+        } catch (error) {
+            console.error('Error fetching products:', error);
+            throw error;
+        }
     }
-}
 
 // Google Maps initialization
 function initMap() {
@@ -291,6 +293,94 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 });
 
+// featured products newVersion
+function createFeaturedProductCard(product) {
+        if (!product || !product.title) { return ''; }
+
+        const price = `£${parseFloat(product.price || 0).toFixed(2)}`;
+        const oldPrice = product.oldPrice ? `£${parseFloat(product.oldPrice).toFixed(2)}` : '';
+        const image = product.images && product.images.length > 0 ? product.images[0] : 'https://placehold.co/600x600?text=No+Image';
+        const onSale = !!product.oldPrice;
+
+        // Determine the category for the filter tabs
+        let category = 'all';
+        if (product.newArrival) category = 'new';
+        else if (product.topSelling) category = 'best';
+        if (onSale) category = 'sale';
+
+        return `
+            <div data-category="${category}">
+                <article class="tm-product-card uk-card uk-card-default product-card uk-light">
+                    <div class="uk-card-media-top uk-inline-clip">
+                        <a class="tm-media-box" href="product.html?id=${product.id}">
+                            <img src="${image}" alt="${product.title}" loading="lazy">
+                        </a>
+                        
+                        <div class="card-actions uk-transition-fade uk-position-top-right uk-padding-small">
+                             <a class="uk-icon-button js-add-to-favorites" href="#" uk-icon="heart" title="Add to favorites"></a>
+                            <button class="uk-icon-button uk-margin-small-left js-add-to-cart" uk-icon="cart" title="Add to Cart"></button>
+                        </div>
+
+                        <div class="uk-position-top-left uk-padding-xsmall">
+                            ${product.newArrival ? '<span class="uk-label uk-label-success">New</span>' : ''}
+                            ${product.topSelling ? '<span class="uk-label uk-label-warning">Top</span>' : ''}
+                            ${onSale ? '<span class="uk-label uk-label-danger">Sale</span>' : ''}
+                        </div>
+
+                        <div class="content-overlay">
+                            <h3 class="uk-card-title uk-margin-remove-bottom uk-text-truncate"><a class="uk-link-reset" href="product.html?id=${product.id}">${product.title}</a></h3>
+                            <p class="uk-text-meta uk-margin-remove-top">${product.category} / ${product.subcategory}</p>
+                            <div class="uk-flex uk-flex-between uk-flex-middle uk-margin-small-top">
+                                <div class="product-price">${price} ${oldPrice ? `<span class="product-price-old">${oldPrice}</span>` : ''}</div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        `;
+    }
+    document.addEventListener('DOMContentLoaded', async () => {
+        // This targets the grid container from our new design.
+        const container = document.querySelector('.featured-section .js-filter');
+
+        // If the new container doesn't exist on the page, do nothing.
+        if (!container) {
+            return;
+        }
+
+        try {
+            const products = await fetchProducts();
+            
+            // Using the exact filter and slice logic from your script.
+            const featuredProducts = products
+                .filter(p => p && (p.newArrival || p.topSelling || (p.inStock && p.inStock > 0)))
+                .slice(0, 8); // Showing 8 cards to better fill the grid
+
+            if (featuredProducts.length === 0) {
+                container.innerHTML = '<div class="uk-width-1-1 uk-text-center uk-padding-small">No featured products available</div>';
+                return;
+            }
+            
+            let productsHtml = '';
+            featuredProducts.forEach(product => {
+                // The main logic now calls our new function.
+                const cardHtml = createFeaturedProductCard(product); 
+                if (cardHtml) {
+                   productsHtml += cardHtml;
+                }
+            });
+
+            container.innerHTML = productsHtml;
+            
+            // Let UIkit re-evaluate the grid after we've added the new content
+            if (UIkit.grid) {
+                UIkit.grid(container);
+            }
+
+        } catch (error) {
+            container.innerHTML = `<div class="uk-width-1-1 uk-text-center uk-padding-small">Error loading products: ${error.message}</div>`;
+        }
+    }); // featured products newVersion 
 // Best Selling Slider
 document.addEventListener('DOMContentLoaded', async () => {
     const slider = document.getElementById('best-selling-slider');
